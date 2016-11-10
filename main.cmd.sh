@@ -22,4 +22,4 @@
 
 ############ NS ############
 #
-# cp src/mobility/examples/ns2-mobility-trace.cc ./scratch/
+# cp ns2-mobility-trace.cc  $NS3_INSTALLATION_DIR/ns3/ns-allinone-3.26/ns-3.26/examples/scratch/
