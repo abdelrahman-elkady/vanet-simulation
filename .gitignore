@@ -1,0 +1,5 @@
+# Ignore generated network file
+*.net.xml
+
+# Ignore trace dump
+sumoTrace.xml

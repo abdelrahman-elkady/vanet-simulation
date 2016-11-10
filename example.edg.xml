@@ -1,0 +1,27 @@
+<edges>
+
+<edge id="a" from="0" to="1" priority="1" numLanes="3" speed="10" />
+
+<edge id="b" from="1" to="2" priority="1" numLanes="3" speed="10" />
+
+<edge id="c" from="0" to="3" priority="1" numLanes="3" speed="10" />
+
+<edge id="d" from="1" to="4" priority="1" numLanes="3" speed="10" />
+
+<edge id="e" from="2" to="5" priority="1" numLanes="3" speed="10" />
+
+<edge id="f" from="3" to="4" priority="1" numLanes="3" speed="10" />
+
+<edge id="g" from="4" to="5" priority="1" numLanes="3" speed="10" />
+
+<edge id="h" from="3" to="6" priority="1" numLanes="3" speed="10" />
+
+<edge id="i" from="4" to="7" priority="1" numLanes="3" speed="10" />
+
+<edge id="j" from="5" to="8" priority="1" numLanes="3" speed="10" />
+
+<edge id="k" from="6" to="7" priority="1" numLanes="3" speed="10" />
+
+<edge id="l" from="7" to="8" priority="1" numLanes="3" speed="10" />
+
+</edges>
