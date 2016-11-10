@@ -3,3 +3,6 @@
 
 # Ignore trace dump
 sumoTrace.xml
+
+# Ignore ns2 trace files
+*.tcl

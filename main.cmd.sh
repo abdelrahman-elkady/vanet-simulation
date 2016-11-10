@@ -10,7 +10,7 @@
 
 #### [3] export netstate dump ####
 #
-# sumo -n example.net.xml -r example.rou.xml --netstate-dump sumoTrace.xml
+# sumo -c main.sumocfg --fcd-output sumoTrace.xml
 
 #### [4] Exporting the trace file ####
 #
