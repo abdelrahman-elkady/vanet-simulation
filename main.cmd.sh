@@ -6,7 +6,7 @@
 # netconvert -n $NODE_FILE -e $EDGE_FILE -o $TO_BE_GENERATED_OUTPUT_NETWORK_FILE
 #
 # Example:
-# netconvert -n example.nod.xml -e example.edg.xml -o example.net.xml
+# netconvert -n main.nod.xml -e main.edg.xml -o main.net.xml
 
 #### [3] export netstate dump ####
 #
@@ -16,3 +16,10 @@
 #
 # $PATH_TO_TRACE_EXPORTER is in your tools dir, check number [1]
 # $PATH_TO_TRACE_EXPORTER --fcd-input sumoTrace.xml --ns2mobility-output ns2mobility.tcl
+
+
+
+
+############ NS ############
+#
+# cp src/mobility/examples/ns2-mobility-trace.cc ./scratch/
