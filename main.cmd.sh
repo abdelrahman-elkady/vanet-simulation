@@ -23,3 +23,8 @@
 ############ NS ############
 #
 # cp ns2-mobility-trace.cc  $NS3_INSTALLATION_DIR/ns3/ns-allinone-3.26/ns-3.26/examples/scratch/
+
+
+## TEMP, WE CAN FIND A BETTER PROGRAMMATICALLY APPROACH
+#
+# ./waf --run "scratch/ns2-mobility-trace --traceFile=$PATH_TO_OUR_PROJECT/ns2mobility.tcl --nodeNum=150 --duration=90.0 --logFile=$HOME/example/main-ns2-mob.log" --visualize
