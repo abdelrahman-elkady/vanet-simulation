@@ -1,69 +1,91 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
 #include "ns3/core-module.h"
-#include "ns3/network-module.h"
+#include "ns3/mobility-module.h"
 #include "ns3/mobility-module.h"
 #include "ns3/ns2-mobility-helper.h"
+
+#include "ns3/network-module.h"
 #include "ns3/aodv-module.h"
 #include "ns3/aodv-helper.h"
-#include "ns3/wifi-helper.h"
-#include "ns3/yans-wifi-helper.h"
-#include "ns3/ipv4-address-helper.h"
-#include "ns3/wifi-phy.h"
-#include "ns3/wifi-mac.h"
-#include "ns3/internet-stack-helper.h"
-#include "ns3/type-id.h"
+
+#include "ns3/netanim-module.h"
 
 using namespace ns3;
 
-// Callback for recieving UDP packet
-void ReceivePacket (Ptr<Socket> socket){
-  NS_LOG_UNCOND ("PACKET RECIEVED");
+// Prints actual position and velocity when a course change event occurs
+static void
+CourseChange (std::ostream *os, std::string foo, Ptr<const MobilityModel> mobility)
+{
+  Vector pos = mobility->GetPosition (); // Get position
+  Vector vel = mobility->GetVelocity (); // Get velocity
+
+  // Prints position and velocities
+  *os << Simulator::Now () << " POS: x=" << pos.x << ", y=" << pos.y
+      << ", z=" << pos.z << "; VEL:" << vel.x << ", y=" << vel.y
+      << ", z=" << vel.z << std::endl;
 }
 
-int main (int argc, char *argv[]) {
+// Example to use ns2 traces file in ns3
+int main (int argc, char *argv[])
+{
+  std::string traceFile;
+  std::string logFile;
 
-  WifiHelper wifi;
-  wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
+  int    nodeNum;
+  double duration;
 
-  YansWifiChannelHelper wifiChannel;
-  wifiChannel.SetPropagationDelay ("ConstantSpeedPropagationDelayModel");
-  wifiChannel.AddPropagationLoss ("FriisPropagationLossModel","MinDistance",DoubleValue (250));
-  WifiPhy.SetChannel (wifiChannel.Create ());
+  // Enable logging from the ns2 helper
+  LogComponentEnable ("Ns2MobilityHelper",LOG_LEVEL_DEBUG);
 
-  WifiPhy wifiPhy;
-  WifiMac wifiMac;
+  // Parse command line attribute
+  CommandLine cmd;
+  cmd.AddValue ("traceFile", "Ns2 movement trace file", traceFile);
+  cmd.AddValue ("nodeNum", "Number of nodes", nodeNum);
+  cmd.AddValue ("duration", "Duration of Simulation", duration);
+  cmd.AddValue ("logFile", "Log file", logFile);
+  cmd.Parse (argc,argv);
 
-  NodeContainer c;
-  c.Create (150);
-  Ns2MobilityHelper ns2 = Ns2MobilityHelper ("scratch/ns2mobility.tcl");
-  ns2.Install ();
-  NetDeviceContainer devices = wifi.Install (wifiPhy, wifiMac, c);
+  // Check command line arguments
+  if (traceFile.empty () || nodeNum <= 0 || duration <= 0 || logFile.empty ())
+    {
+      std::cout << "Usage of " << argv[0] << " :\n\n"
+      "./waf --run \"ns2-mobility-trace"
+      " --traceFile=src/mobility/examples/default.ns_movements"
+      " --nodeNum=2 --duration=100.0 --logFile=ns2-mob.log\" \n\n"
+      "NOTE: ns2-traces-file could be an absolute or relative path. You could use the file default.ns_movements\n"
+      "      included in the same directory of this example file.\n\n"
+      "NOTE 2: Number of nodes present in the trace file must match with the command line argument and must\n"
+      "        be a positive number. Note that you must know it before to be able to load it.\n\n"
+      "NOTE 3: Duration must be a positive number. Note that you must know it before to be able to load it.\n\n";
 
-  AodvHelper aodv;
-  InternetStackHelper internet;
-  internet.SetRoutingHelper (aodv);
-  internet.Install (c);
+      return 0;
+    }
 
-  Ipv4AddressHelper ipv4;
-  ipv4.SetBase ("10.1.1.0", "255.255.255.0");
-  Ipv4InterfaceContainer i = ipv4.Assign (devices);
+  // Create Ns2MobilityHelper with the specified trace log file as parameter
+  Ns2MobilityHelper ns2 = Ns2MobilityHelper (traceFile);
 
-  // Setting UDP application
-  uint16_t Port = 12345;
+  // open log file for output
+  std::ofstream os;
+  os.open (logFile.c_str ());
 
-  TypeId tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
+  // Create all nodes.
+  NodeContainer stas;
+  stas.Create (nodeNum);
 
-  Ptr<Socket> recvSink = Socket::CreateSocket (c.Get (71), tid);
-  InetSocketAddress local = InetSocketAddress ((Ipv4Address::GetAny()), Port);
-  recvSink->Bind (local);
-  recvSink->SetRecvCallback (MakeCallback (&ReceivePacket));
+  ns2.Install (); // configure movements for each node, while reading trace file
 
-  Ptr<Socket> source;
-  source = Socket::CreateSocket (c.Get (23), tid);
-  InetSocketAddress remote = InetSocketAddress (("10.1.1.72"), Port);
-  source->Connect (remote);
+  // Configure callback for logging
+  Config::Connect ("/NodeList/*/$ns3::MobilityModel/CourseChange",
+                   MakeBoundCallback (&CourseChange, &os));
 
+  AnimationInterface anim ("animation.xml");
+  Simulator::Stop (Seconds (duration));
   Simulator::Run ();
-  Simulator::Stop(Seconds (308));
+  Simulator::Destroy ();
 
+  os.close (); // close log file
   return 0;
 }
