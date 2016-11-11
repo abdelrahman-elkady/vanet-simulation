@@ -57,7 +57,8 @@ int main (int argc, char *argv[]) {
 
 
   NodeContainer c;
-  c.Create (150);
+  c.Create (nodeNum);
+
   Ns2MobilityHelper ns2 = Ns2MobilityHelper (traceFile);
   ns2.Install ();
   NetDeviceContainer devices = wifi.Install (wifiPhy, wifiMac, c);
