@@ -7,6 +7,10 @@
 
 all: check_env generate_network prepare_dump run_simiulation
 
+sumo:
+	netconvert -n main.nod.xml -e main.edg.xml -o main.net.xml
+	duarouter -n main.net.xml -f main.flow.xml -o main.rou.xml
+	sumo-gui -c main.sumocfg
 
 run_simiulation: copy_ns2_file
 	cd $(NS_HOME) && ./waf --run 'scratch/ns2-mobility-trace --traceFile=scratch/ns2mobility.tcl --nodeNum=7 --duration=90.0 --logFile=$(PROJECT_ROOT)/main-ns2-mob.log' --visualize

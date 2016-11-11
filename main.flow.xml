@@ -1,9 +1,9 @@
 <flows>
 
-<flow id="0" from="a" to="l" begin="0" end="40" number="3" />
+<flow id="0" from="a" to="l" begin="0" end="40" number="10" />
 
-<flow id="1" from="a" to="j" begin="20" end="60" number="3" />
+<flow id="1" from="a" to="j" begin="5" end="40" number="7" />
 
-<flow id="2" from="f" to="l" begin="50" end="90" number="5" />
+<flow id="2" from="f" to="l" begin="5" end="30" number="10" />
 
 </flows>
