@@ -6,3 +6,6 @@ sumoTrace.xml
 
 # Ignore ns2 trace files
 *.tcl
+
+# Ignore log files
+*.log

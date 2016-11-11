@@ -37,19 +37,6 @@ int main (int argc, char *argv[])
   int    nodeNum;
   double duration;
 
-  // kady: Create a WiFi channel
-  WifiHelper wifi;
-  wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
-
-  // kady: Set Propagation model [Delay and loss]
-  YansWifiChannelHelper wifiChannel;
-  wifiChannel.SetPropagationDelay ("ns3::ConstantSpeedPropagationDelayModel");
-  wifiChannel.AddPropagationLoss ("ns3::FriisPropagationLossModel","MinDistance",DoubleValue (250));
-  wifiPhy.SetChannel (wifiChannel.Create ());
-
-
-
-
   // Enable logging from the ns2 helper
   LogComponentEnable ("Ns2MobilityHelper",LOG_LEVEL_DEBUG);
 
