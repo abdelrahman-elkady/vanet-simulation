@@ -20,6 +20,8 @@ generate_network:
 prepare_dump:
 	sumo -c main.sumocfg --fcd-output sumoTrace.xml
 	$(SUMO_TOOLS)/traceExporter.py --fcd-input sumoTrace.xml --ns2mobility-output ns2mobility.tcl
+	$(SUMO_TOOLS)/traceExporter.py --fcd-input sumoTrace.xml --ns2activity-output ns2activity.tcl
+	$(SUMO_TOOLS)/traceExporter.py --fcd-input sumoTrace.xml --ns2config-output ns2config.tcl
 
 check_env:
 ifndef SUMO_TOOLS
