@@ -9,7 +9,7 @@ all: check_env generate_network prepare_dump run_simiulation
 
 
 run_simiulation: copy_ns2_file
-	cd $(NS_HOME) && ./waf --run 'scratch/ns2-mobility-trace --traceFile=$(PROJECT_ROOT)/ns2mobility.tcl --nodeNum=150 --duration=90.0 --logFile=$(PROJECT_ROOT)/main-ns2-mob.log'
+	cd $(NS_HOME) && ./waf --run 'scratch/ns2-mobility-trace --traceFile=scratch/ns2mobility.tcl --nodeNum=150 --duration=90.0 --logFile=$(PROJECT_ROOT)/main-ns2-mob.log'
 
 copy_ns2_file:
 	cp ns2-mobility-trace.cc $(NS_HOME)/scratch
@@ -22,6 +22,11 @@ prepare_dump:
 	$(SUMO_TOOLS)/traceExporter.py --fcd-input sumoTrace.xml --ns2mobility-output ns2mobility.tcl
 	$(SUMO_TOOLS)/traceExporter.py --fcd-input sumoTrace.xml --ns2activity-output ns2activity.tcl
 	$(SUMO_TOOLS)/traceExporter.py --fcd-input sumoTrace.xml --ns2config-output ns2config.tcl
+
+	cp ns2mobility.tcl $(NS_HOME)/scratch
+	cp ns2activity.tcl $(NS_HOME)/scratch
+	cp ns2config.tcl $(NS_HOME)/scratch
+
 
 check_env:
 ifndef SUMO_TOOLS
