@@ -11,7 +11,9 @@ sumo: generate_network
 	sumo-gui -c main.sumocfg
 
 run_simiulation: copy_ns2_file
-	cd $(NS_HOME) && ./waf --run 'scratch/ns2-mobility-trace --traceFile=scratch/ns2mobility.tcl --nodeNum=7 --duration=90.0 --logFile=$(PROJECT_ROOT)/main-ns2-mob.log' --visualize
+	cd $(NS_HOME) && NS_LOG="AodvRoutingProtocol" ./waf --run 'scratch/ns2-mobility-trace --traceFile=scratch/ns2mobility.tcl --nodeNum=7 --duration=90.0' > $(PROJECT_ROOT)/main-ns2-mob.log 2>&1
+
+# AodvRoutingProtocol || AodvRoutingTable
 
 copy_ns2_file:
 	cp ns2-mobility-trace.cc $(NS_HOME)/scratch

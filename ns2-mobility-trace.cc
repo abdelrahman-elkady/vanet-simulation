@@ -27,7 +27,6 @@ void ReceivePacket (Ptr<Socket> socket){
 int main (int argc, char *argv[]) {
 
   std::string traceFile;
-  std::string logFile;
 
   int    nodeNum;
   double duration;
@@ -37,12 +36,7 @@ int main (int argc, char *argv[]) {
   cmd.AddValue ("traceFile", "Ns2 movement trace file", traceFile);
   cmd.AddValue ("nodeNum", "Number of nodes", nodeNum);
   cmd.AddValue ("duration", "Duration of Simulation", duration);
-  cmd.AddValue ("logFile", "Log file", logFile);
   cmd.Parse (argc,argv);
-
-  // open log file for output
-  std::ofstream os;
-  os.open (logFile.c_str ());
 
   WifiHelper wifi;
   wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
@@ -72,25 +66,10 @@ int main (int argc, char *argv[]) {
   ipv4.SetBase ("10.1.1.0", "255.255.255.0");
   Ipv4InterfaceContainer i = ipv4.Assign (devices);
 
-  // Setting UDP application
-  uint16_t Port = 12345;
-
-  TypeId tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
-
-  Ptr<Socket> recvSink = Socket::CreateSocket (c.Get (1), tid);
-  InetSocketAddress local = InetSocketAddress ((Ipv4Address::GetAny()), Port);
-  recvSink->Bind (local);
-  recvSink->SetRecvCallback (MakeCallback (&ReceivePacket));
-
-  Ptr<Socket> source;
-  source = Socket::CreateSocket (c.Get (3), tid);
-  InetSocketAddress remote = InetSocketAddress (("10.1.1.72"), Port);
-  source->Connect (remote);
 
   Simulator::Stop (Seconds (duration));
   Simulator::Run ();
   Simulator::Destroy ();
 
-  os.close (); // close log file
   return 0;
 }
