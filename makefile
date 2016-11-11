@@ -7,9 +7,7 @@
 
 all: check_env generate_network prepare_dump run_simiulation
 
-sumo:
-	netconvert -n main.nod.xml -e main.edg.xml -o main.net.xml
-	duarouter -n main.net.xml -f main.flow.xml -o main.rou.xml
+sumo: generate_network
 	sumo-gui -c main.sumocfg
 
 run_simiulation: copy_ns2_file
@@ -20,6 +18,7 @@ copy_ns2_file:
 
 generate_network:
 	netconvert -n main.nod.xml -e main.edg.xml -o main.net.xml
+	duarouter -n main.net.xml -f main.flow.xml -o main.rou.xml
 
 prepare_dump:
 	sumo -c main.sumocfg --fcd-output sumoTrace.xml
