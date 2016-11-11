@@ -17,7 +17,10 @@
 # $PATH_TO_TRACE_EXPORTER is in your tools dir, check number [1]
 # $PATH_TO_TRACE_EXPORTER --fcd-input sumoTrace.xml --ns2mobility-output ns2mobility.tcl
 
-
+### GENERATE THE ROUTE ####
+#
+# duarouter -n main.net.xml -f main.flow.xml -o main.rou.xml
+#
 
 
 ############ NS ############

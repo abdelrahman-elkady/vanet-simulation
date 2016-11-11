@@ -9,7 +9,7 @@ all: check_env generate_network prepare_dump run_simiulation
 
 
 run_simiulation: copy_ns2_file
-	cd $(NS_HOME) && ./waf --run 'scratch/ns2-mobility-trace --traceFile=scratch/ns2mobility.tcl --nodeNum=150 --duration=90.0 --logFile=$(PROJECT_ROOT)/main-ns2-mob.log'
+	cd $(NS_HOME) && ./waf --run 'scratch/ns2-mobility-trace --traceFile=scratch/ns2mobility.tcl --nodeNum=7 --duration=90.0 --logFile=$(PROJECT_ROOT)/main-ns2-mob.log' --visualize
 
 copy_ns2_file:
 	cp ns2-mobility-trace.cc $(NS_HOME)/scratch

@@ -77,16 +77,15 @@ int main (int argc, char *argv[]) {
 
   TypeId tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
 
-  Ptr<Socket> recvSink = Socket::CreateSocket (c.Get (71), tid);
+  Ptr<Socket> recvSink = Socket::CreateSocket (c.Get (1), tid);
   InetSocketAddress local = InetSocketAddress ((Ipv4Address::GetAny()), Port);
   recvSink->Bind (local);
   recvSink->SetRecvCallback (MakeCallback (&ReceivePacket));
 
   Ptr<Socket> source;
-  source = Socket::CreateSocket (c.Get (23), tid);
+  source = Socket::CreateSocket (c.Get (3), tid);
   InetSocketAddress remote = InetSocketAddress (("10.1.1.72"), Port);
   source->Connect (remote);
-
 
   Simulator::Stop (Seconds (duration));
   Simulator::Run ();
