@@ -17,6 +17,7 @@
 #include "ns3/type-id.h"
 #include "ns3/nqos-wifi-mac-helper.h"
 #include "ns3/trace-helper.h"
+#include "ns3/animation-interface.h"
 
 using namespace ns3;
 
@@ -45,7 +46,6 @@ int main (int argc, char *argv[]) {
   wifiChannel.AddPropagationLoss ("ns3::FriisPropagationLossModel");
   wifiPhy.SetChannel (wifiChannel.Create ());
 
-
   NodeContainer c;
   c.Create (nodeNum);
 
@@ -68,6 +68,9 @@ int main (int argc, char *argv[]) {
 
   AsciiTraceHelper ascii;
   wifiPhy.EnableAsciiAll (ascii.CreateFileStream ("wifi-tracing.tr"));
+
+  // Export an animation xml trace
+  AnimationInterface anim ("vanet-animation.xml");
 
   Simulator::Stop (Seconds (duration));
   Simulator::Run ();
