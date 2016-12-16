@@ -16,6 +16,7 @@
 #include "ns3/internet-stack-helper.h"
 #include "ns3/type-id.h"
 #include "ns3/nqos-wifi-mac-helper.h"
+#include "ns3/trace-helper.h"
 
 using namespace ns3;
 
@@ -61,6 +62,12 @@ int main (int argc, char *argv[]) {
   ipv4.SetBase ("10.1.1.0", "255.255.255.0");
   Ipv4InterfaceContainer i = ipv4.Assign (devices);
 
+  // AODV Route table snapshot
+  Ptr<OutputStreamWrapper> routingStream = Create<OutputStreamWrapper> ("aodv.routes", std::ios::out);
+  aodv.PrintRoutingTableAllAt (Seconds (8), routingStream);
+
+  AsciiTraceHelper ascii;
+  wifiPhy.EnableAsciiAll (ascii.CreateFileStream ("wifi-tracer.tr"));
 
   Simulator::Stop (Seconds (duration));
   Simulator::Run ();

@@ -10,9 +10,9 @@ all: check_env generate_network prepare_dump run_simiulation
 sumo: generate_network
 	sumo-gui -c main.sumocfg
 
-# AodvRoutingProtocol || AodvRoutingTable
+# NS_LOG="AodvRoutingTable"  # AodvRoutingProtocol || AodvRoutingTable
 run_simiulation: copy_ns2_file
-	cd $(NS_HOME) && NS_LOG="AodvRoutingTable" ./waf --run 'scratch/ns2-mobility-trace --traceFile=scratch/ns2mobility.tcl --nodeNum=7 --duration=90.0' # > $(PROJECT_ROOT)main-ns2-mob.log 2>&1
+	cd $(NS_HOME) && ./waf --run 'scratch/ns2-mobility-trace --traceFile=scratch/ns2mobility.tcl --nodeNum=27 --duration=45.0' # > $(PROJECT_ROOT)main-ns2-mob.log 2>&1
 
 
 copy_ns2_file:
