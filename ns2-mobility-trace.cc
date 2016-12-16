@@ -67,7 +67,7 @@ int main (int argc, char *argv[]) {
   aodv.PrintRoutingTableAllAt (Seconds (8), routingStream);
 
   AsciiTraceHelper ascii;
-  wifiPhy.EnableAsciiAll (ascii.CreateFileStream ("wifi-tracer.tr"));
+  wifiPhy.EnableAsciiAll (ascii.CreateFileStream ("wifi-tracing.tr"));
 
   Simulator::Stop (Seconds (duration));
   Simulator::Run ();

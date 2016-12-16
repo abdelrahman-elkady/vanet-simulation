@@ -13,3 +13,6 @@ sumoTrace.xml
 
 # Ignore log files
 *.log
+
+# Ignore traced files
+trace/

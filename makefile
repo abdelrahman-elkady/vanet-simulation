@@ -13,7 +13,8 @@ sumo: generate_network
 # NS_LOG="AodvRoutingTable"  # AodvRoutingProtocol || AodvRoutingTable
 run_simiulation: copy_ns2_file
 	cd $(NS_HOME) && ./waf --run 'scratch/ns2-mobility-trace --traceFile=scratch/ns2mobility.tcl --nodeNum=27 --duration=45.0' # > $(PROJECT_ROOT)main-ns2-mob.log 2>&1
-
+	# Copy the trace logs
+	cd $(NS_HOME) && cp aodv.routes $(PROJECT_ROOT)trace && cp wifi-tracing.tr $(PROJECT_ROOT)trace
 
 copy_ns2_file:
 	cp ns2-mobility-trace.cc $(NS_HOME)/scratch
