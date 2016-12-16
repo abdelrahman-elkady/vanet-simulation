@@ -12,7 +12,7 @@ sumo: generate_network
 
 # AodvRoutingProtocol || AodvRoutingTable
 run_simiulation: copy_ns2_file
-	cd $(NS_HOME) && NS_LOG="AodvRoutingTable" ./waf --run 'scratch/ns2-mobility-trace --traceFile=scratch/ns2mobility.tcl --nodeNum=7 --duration=90.0' > $(PROJECT_ROOT)main-ns2-mob.log 2>&1
+	cd $(NS_HOME) && NS_LOG="AodvRoutingTable" ./waf --run 'scratch/ns2-mobility-trace --traceFile=scratch/ns2mobility.tcl --nodeNum=7 --duration=90.0' # > $(PROJECT_ROOT)main-ns2-mob.log 2>&1
 
 
 copy_ns2_file:

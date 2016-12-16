@@ -19,11 +19,6 @@
 
 using namespace ns3;
 
-// Callback for recieving UDP packet
-void ReceivePacket (Ptr<Socket> socket){
-  NS_LOG_UNCOND ("PACKET RECIEVED");
-}
-
 int main (int argc, char *argv[]) {
 
   std::string traceFile;

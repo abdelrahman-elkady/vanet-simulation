@@ -4,6 +4,10 @@
 # Ignore trace dump
 sumoTrace.xml
 
+# Ignore generated .rou files
+*.rou.xml
+*.rou.alt.xml
+
 # Ignore ns2 trace files
 *.tcl
 
