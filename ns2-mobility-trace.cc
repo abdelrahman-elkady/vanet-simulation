@@ -71,6 +71,8 @@ int main (int argc, char *argv[]) {
 
   // Export an animation xml trace
   AnimationInterface anim ("vanet-animation.xml");
+  anim.EnableIpv4RouteTracking ("route-tracking.xml", Seconds(5), Seconds(25), Seconds(1));
+  anim.EnablePacketMetadata (true);
 
   Simulator::Stop (Seconds (duration));
   Simulator::Run ();
